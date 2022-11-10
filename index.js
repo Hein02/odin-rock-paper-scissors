@@ -25,17 +25,20 @@ function init() {
 }
 
 function getUserPick() {
-  return prompt(
-    `Please type one of the following: 
-       1. rock
-       2. paper
-       3. scissors`
-  );
+  let userPick;
+  do {
+    userPick = prompt(
+      `Please type one of the following: 
+             1. rock
+             2. paper
+             3. scissors`
+    );
+  } while (!userPick);
+  return userPick;
 }
 
 function getComputerPick() {
   const randomNumber = Math.floor(Math.random() * 3);
-  console.log(randomNumber);
   switch (randomNumber) {
     case 0:
       return 'rock';
