@@ -13,3 +13,34 @@
 //     print 'User wins'
 //   ELSE IF userPick = computerPick, print 'Ties'
 //   ELSE, print 'User loses'
+
+let userPick, computerPick, randomNumber;
+
+userPick = prompt(
+  `Please type one of the following: 
+   1. rock
+   2. paper
+   3. scissors`
+);
+
+randomNumber = Math.floor(Math.random() * 2);
+
+if (randomNumber === 0) {
+  computerPick = 'rock';
+} else if (randomNumber === 1) {
+  computerPick = 'paper';
+} else {
+  computerPick = 'scissors';
+}
+
+if (
+  (userPick === 'rock' && computerPick == 'scissors') ||
+  (userPick === 'paper' && computerPick === 'rock') ||
+  (userPick === 'scissors' && computerPick === 'paper')
+) {
+  console.log(`User wins`);
+} else if (userPick === computerPick) {
+  console.log('Ties');
+} else {
+  console.log(`User loses`);
+}
