@@ -15,33 +15,70 @@
 //   ELSE, print 'User loses'
 'use strict';
 
-let userPick, computerPick, randomNumber;
+function init() {
+  let userPick, computerPick, result;
 
-userPick = prompt(
-  `Please type one of the following: 
-   1. rock
-   2. paper
-   3. scissors`
-);
-
-randomNumber = Math.floor(Math.random() * 2);
-
-if (randomNumber === 0) {
-  computerPick = 'rock';
-} else if (randomNumber === 1) {
-  computerPick = 'paper';
-} else {
-  computerPick = 'scissors';
+  userPick = getUserPick();
+  computerPick = getComputerPick();
+  result = checkResult(userPick, computerPick);
+  printResult(result, userPick, computerPick);
 }
 
-if (
-  (userPick === 'rock' && computerPick == 'scissors') ||
-  (userPick === 'paper' && computerPick === 'rock') ||
-  (userPick === 'scissors' && computerPick === 'paper')
-) {
-  console.log(`User wins`);
-} else if (userPick === computerPick) {
-  console.log('Ties');
-} else {
-  console.log(`User loses`);
+function getUserPick() {
+  return prompt(
+    `Please type one of the following: 
+       1. rock
+       2. paper
+       3. scissors`
+  );
 }
+
+function getComputerPick() {
+  const randomNumber = Math.floor(Math.random() * 3);
+  console.log(randomNumber);
+  switch (randomNumber) {
+    case 0:
+      return 'rock';
+    case 1:
+      return 'paper';
+    case 2:
+      return 'scissors';
+    default:
+      return 'error';
+  }
+}
+
+function checkResult(userPick, computerPick) {
+  if (
+    (userPick === 'rock' && computerPick == 'scissors') ||
+    (userPick === 'paper' && computerPick === 'rock') ||
+    (userPick === 'scissors' && computerPick === 'paper')
+  ) {
+    return 1;
+  } else if (userPick === computerPick) {
+    return 0;
+  } else {
+    return -1;
+  }
+}
+
+function printResult(result, userPick, computerPick) {
+  userPick = userPick.toUpperCase();
+  computerPick = computerPick.toUpperCase();
+  switch (result) {
+    case 0:
+      console.log('Ties');
+      break;
+    case 1:
+      console.log(`User wins. ${userPick} beats ${computerPick}.`);
+      break;
+    case -1:
+      console.log(`User loses. ${computerPick} beats ${userPick}.`);
+      break;
+    default:
+      console.log('Error');
+      break;
+  }
+}
+
+window.onload = init;
