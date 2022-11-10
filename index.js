@@ -33,6 +33,7 @@ function getUserPick() {
              2. paper
              3. scissors`
     );
+    userPick = userPick.toLowerCase().trim();
   } while (!userPick);
   return userPick;
 }
