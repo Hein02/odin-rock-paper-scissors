@@ -13,6 +13,7 @@
 //     print 'User wins'
 //   ELSE IF userPick = computerPick, print 'Ties'
 //   ELSE, print 'User loses'
+'use strict';
 
 let userPick, computerPick, randomNumber;
 
