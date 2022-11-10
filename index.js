@@ -34,8 +34,13 @@ function getUserPick() {
              3. scissors`
     );
     userPick = userPick.toLowerCase().trim();
-  } while (!userPick);
+  } while (!userPick || !validateInput(userPick));
   return userPick;
+}
+
+function validateInput(input) {
+  const choices = ['rock', 'paper', 'scissors'];
+  return choices.includes(input);
 }
 
 function getComputerPick() {
