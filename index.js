@@ -16,14 +16,15 @@
 'use strict';
 
 function init() {
+  let scores = { user: 0, computer: 0 };
   createMultipleRounds(5);
 
   function play() {
     let userPick, computerPick, result;
-
     userPick = getUserPick();
     computerPick = getComputerPick();
     result = checkResult(userPick, computerPick);
+    updateScores(result, scores);
     printResult(result, userPick, computerPick);
   }
 
@@ -97,7 +98,38 @@ function init() {
     for (let i = 0; i < counts; i++) {
       play();
     }
+    printFinalWinner(scores);
   }
+
+  function updateScores(result, scores) {
+    switch (result) {
+      case 1:
+        scores.user += 1;
+        break;
+      case -1:
+        scores.computer += 1;
+        break;
+      default:
+        break;
+    }
+  }
+
+  function printFinalWinner(scores) {
+    switch (true) {
+      case scores.user > scores.computer:
+        console.log("Congratulation! You're the final winner.");
+        break;
+      case scores.user < scores.computer:
+        console.log('Try again! You lose.');
+        break;
+      default:
+        console.log('Nobody wins!');
+        break;
+    }
+  }
+  console.log(
+    `User Scores: ${scores.user}, Computer Scores: ${scores.computer}`
+  );
 }
 
 window.onload = init;
