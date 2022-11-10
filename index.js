@@ -15,79 +15,89 @@
 //   ELSE, print 'User loses'
 'use strict';
 
-function play() {
-  let userPick, computerPick, result;
+function init() {
+  createMultipleRounds(5);
 
-  userPick = getUserPick();
-  computerPick = getComputerPick();
-  result = checkResult(userPick, computerPick);
-  printResult(result, userPick, computerPick);
-}
+  function play() {
+    let userPick, computerPick, result;
 
-function getUserPick() {
-  let userPick;
-  do {
-    userPick = prompt(
-      `Please type one of the following: 
-             1. rock
-             2. paper
-             3. scissors`
-    );
-    userPick = userPick.toLowerCase().trim();
-  } while (!userPick || !validateInput(userPick));
-  return userPick;
-}
+    userPick = getUserPick();
+    computerPick = getComputerPick();
+    result = checkResult(userPick, computerPick);
+    printResult(result, userPick, computerPick);
+  }
 
-function validateInput(input) {
-  const choices = ['rock', 'paper', 'scissors'];
-  return choices.includes(input);
-}
+  function getUserPick() {
+    let userPick;
+    do {
+      userPick = prompt(
+        `Please type one of the following: 
+                   1. rock
+                   2. paper
+                   3. scissors`
+      );
+      userPick = userPick.toLowerCase().trim();
+    } while (!userPick || !validateInput(userPick));
+    return userPick;
+  }
 
-function getComputerPick() {
-  const randomNumber = Math.floor(Math.random() * 3);
-  switch (randomNumber) {
-    case 0:
-      return 'rock';
-    case 1:
-      return 'paper';
-    case 2:
-      return 'scissors';
-    default:
-      return 'error';
+  function validateInput(input) {
+    const choices = ['rock', 'paper', 'scissors'];
+    return choices.includes(input);
+  }
+
+  function getComputerPick() {
+    const randomNumber = Math.floor(Math.random() * 3);
+    switch (randomNumber) {
+      case 0:
+        return 'rock';
+      case 1:
+        return 'paper';
+      case 2:
+        return 'scissors';
+      default:
+        return 'error';
+    }
+  }
+
+  function checkResult(userPick, computerPick) {
+    if (
+      (userPick === 'rock' && computerPick == 'scissors') ||
+      (userPick === 'paper' && computerPick === 'rock') ||
+      (userPick === 'scissors' && computerPick === 'paper')
+    ) {
+      return 1;
+    } else if (userPick === computerPick) {
+      return 0;
+    } else {
+      return -1;
+    }
+  }
+
+  function printResult(result, userPick, computerPick) {
+    userPick = userPick.toUpperCase();
+    computerPick = computerPick.toUpperCase();
+    switch (result) {
+      case 0:
+        console.log('Ties!');
+        break;
+      case 1:
+        console.log(`You win! ${userPick} beats ${computerPick}.`);
+        break;
+      case -1:
+        console.log(`You lose! ${computerPick} beats ${userPick}.`);
+        break;
+      default:
+        console.log('Error');
+        break;
+    }
+  }
+
+  function createMultipleRounds(counts = 5) {
+    for (let i = 0; i < counts; i++) {
+      play();
+    }
   }
 }
 
-function checkResult(userPick, computerPick) {
-  if (
-    (userPick === 'rock' && computerPick == 'scissors') ||
-    (userPick === 'paper' && computerPick === 'rock') ||
-    (userPick === 'scissors' && computerPick === 'paper')
-  ) {
-    return 1;
-  } else if (userPick === computerPick) {
-    return 0;
-  } else {
-    return -1;
-  }
-}
-
-function printResult(result, userPick, computerPick) {
-  userPick = userPick.toUpperCase();
-  computerPick = computerPick.toUpperCase();
-  switch (result) {
-    case 0:
-      console.log('Ties!');
-      break;
-    case 1:
-      console.log(`You win! ${userPick} beats ${computerPick}.`);
-      break;
-    case -1:
-      console.log(`You lose! ${computerPick} beats ${userPick}.`);
-      break;
-    default:
-      console.log('Error');
-      break;
-  }
-}
-
-window.onload = play;
+window.onload = init;
