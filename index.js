@@ -15,7 +15,7 @@
 //   ELSE, print 'User loses'
 'use strict';
 
-function init() {
+function play() {
   let userPick, computerPick, result;
 
   userPick = getUserPick();
@@ -76,13 +76,13 @@ function printResult(result, userPick, computerPick) {
   computerPick = computerPick.toUpperCase();
   switch (result) {
     case 0:
-      console.log('Ties');
+      console.log('Ties!');
       break;
     case 1:
-      console.log(`User wins. ${userPick} beats ${computerPick}.`);
+      console.log(`You win! ${userPick} beats ${computerPick}.`);
       break;
     case -1:
-      console.log(`User loses. ${computerPick} beats ${userPick}.`);
+      console.log(`You lose! ${computerPick} beats ${userPick}.`);
       break;
     default:
       console.log('Error');
@@ -90,4 +90,4 @@ function printResult(result, userPick, computerPick) {
   }
 }
 
-window.onload = init;
+window.onload = play;
