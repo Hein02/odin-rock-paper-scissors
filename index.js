@@ -1,135 +1,187 @@
-// Ask user to type one of the following: 'rock', 'paper', 'scissors'
-//   Assign the user's input to a variable named userPick
-// Create a variable named computerPick
-// Generate a random number ranging from 0 to 2
-// Assign one of the following: 'rock', 'paper', 'scissors' to computerPick, based on the following conditions
-//   IF randomNumber = 0, assign 'rock' to computerPick
-//   ELSE IF randomNumber = 1, assign 'paper' to computerPick
-//   ELSE, assign 'scissors' to computerPick
-// Evaluate whether user wins or ties based on the inputs and print the result
-//   IF userPick = 'rock' AND computerPick = 'scissors'
-//     OR userPick = 'paper' AND computerPick = 'rock'
-//     OR userPick = 'scissors' AND computerPick = 'paper',
-//     print 'User wins'
-//   ELSE IF userPick = computerPick, print 'Ties'
-//   ELSE, print 'User loses'
 'use strict';
 
-function init() {
-  let scores = { user: 0, computer: 0 };
-  createMultipleRounds(5);
-
-  function play() {
-    let userPick, computerPick, result;
-    userPick = getUserPick();
-    computerPick = getComputerPick();
-    result = checkResult(userPick, computerPick);
-    updateScores(result, scores);
-    printResult(result, userPick, computerPick);
+class View {
+  constructor() {
+    this.huScore = document.querySelector('.js-hu-score');
+    this.aiScore = document.querySelector('.js-ai-score');
+    this.message = document.querySelector('.js-message');
+    this.buttons = document.querySelectorAll('.js-button');
+    this.huPickEl = document.querySelector('.js-hu-pick');
+    this.aiPick = document.querySelector('.js-ai-pick');
+    this.announcement = document.querySelector('.js-announcement');
+    this.reset = document.querySelector('.js-reset');
+    this.rounds = document.querySelector('.js-rounds');
   }
 
-  function getUserPick() {
-    let userPick;
-    do {
-      userPick = prompt(
-        `Please type one of the following: 
-                   1. rock
-                   2. paper
-                   3. scissors`
-      );
-      userPick = userPick.toLowerCase().trim();
-    } while (!userPick || !validateInput(userPick));
-    return userPick;
+  displayScores(scores) {
+    this.huScore.textContent = scores.huScore;
+    this.aiScore.textContent = scores.aiScore;
   }
 
-  function validateInput(input) {
-    const choices = ['rock', 'paper', 'scissors'];
-    return choices.includes(input);
+  displayMessage(message) {
+    this.message.textContent = message;
   }
 
-  function getComputerPick() {
-    const randomNumber = Math.floor(Math.random() * 3);
-    switch (randomNumber) {
-      case 0:
-        return 'rock';
-      case 1:
-        return 'paper';
-      case 2:
-        return 'scissors';
-      default:
-        return 'error';
+  displayPicks(picks) {
+    this.huPickEl.textContent = picks.huPick;
+    this.aiPick.textContent = picks.aiPick;
+  }
+
+  displayAnnouncement(announcement) {
+    this.announcement.textContent = announcement;
+  }
+
+  displayRounds(rounds) {
+    this.rounds.textContent = rounds;
+  }
+
+  addPlayEvents(handler) {
+    this.buttons.forEach((button) => button.addEventListener('click', handler));
+  }
+
+  removePlayEvents(handler) {
+    this.buttons.forEach((button) =>
+      button.removeEventListener('click', handler)
+    );
+  }
+
+  showResetButton() {
+    this.reset.hidden = false;
+  }
+
+  hideResetButton() {
+    this.reset.hidden = true;
+  }
+
+  addResetEvent(handler) {
+    this.reset.addEventListener('click', handler);
+  }
+}
+
+class Controller {
+  constructor(view) {
+    this.view = view;
+
+    this.init();
+  }
+
+  play = (event) => {
+    this.setHuPick(event.target.value);
+    const randomNum = this.getRandomNum();
+    this.setAiPick(this.model.choices[randomNum]);
+    const result = this.getResult(this.model.picks);
+    this.setMessageAndScores(result);
+    this.setRounds();
+    this.updateView();
+    if (this.model.scores.huScore > 4 || this.model.scores.aiScore > 4) {
+      this.stop();
     }
+  };
+
+  setHuPick(pick) {
+    this.model.picks.huPick = pick;
   }
 
-  function checkResult(userPick, computerPick) {
+  setAiPick(pick) {
+    this.model.picks.aiPick = pick;
+  }
+
+  setRounds() {
+    this.model.rounds += 1;
+  }
+
+  getRandomNum() {
+    return Math.floor(Math.random() * 3);
+  }
+
+  getResult({ huPick, aiPick }) {
     if (
-      (userPick === 'rock' && computerPick == 'scissors') ||
-      (userPick === 'paper' && computerPick === 'rock') ||
-      (userPick === 'scissors' && computerPick === 'paper')
+      (huPick === 'rock' && aiPick === 'scissors') ||
+      (huPick === 'paper' && aiPick === 'rock') ||
+      (huPick === 'scissors' && aiPick === 'paper')
     ) {
       return 1;
-    } else if (userPick === computerPick) {
+    } else if (huPick === aiPick) {
       return 0;
     } else {
       return -1;
     }
   }
 
-  function printResult(result, userPick, computerPick) {
-    userPick = userPick.toUpperCase();
-    computerPick = computerPick.toUpperCase();
-    switch (result) {
-      case 0:
-        console.log('Ties!');
-        break;
-      case 1:
-        console.log(`You win! ${userPick} beats ${computerPick}.`);
-        break;
-      case -1:
-        console.log(`You lose! ${computerPick} beats ${userPick}.`);
-        break;
-      default:
-        console.log('Error');
-        break;
+  setMessageAndScores(result) {
+    let message,
+      huPoint = 0,
+      aiPoint = 0;
+    if (result === 0) {
+      message = 'Ties.';
+    } else if (result === 1) {
+      message = `You win! ${this.model.picks.huPick} beats ${this.model.picks.aiPick}.`;
+      huPoint = 1;
+    } else {
+      message = `You lose! ${this.model.picks.aiPick} beats ${this.model.picks.huPick}.`;
+      aiPoint = 1;
     }
+    this.model.message = message;
+    this.model.scores.huScore += huPoint;
+    this.model.scores.aiScore += aiPoint;
   }
 
-  function createMultipleRounds(counts = 5) {
-    for (let i = 0; i < counts; i++) {
-      play();
+  setAnnouncement() {
+    let announcement;
+    if (this.model.scores.huScore > this.model.scores.aiScore) {
+      announcement = "Congradulation! You're the final winner.";
+    } else if (this.model.scores.huScore < this.model.scores.aiScore) {
+      announcement = 'Try again! You lose.';
+    } else {
+      announcement = 'Nobody wins!';
     }
-    printFinalWinner(scores);
+    this.model.announcement = announcement;
   }
 
-  function updateScores(result, scores) {
-    switch (result) {
-      case 1:
-        scores.user += 1;
-        break;
-      case -1:
-        scores.computer += 1;
-        break;
-      default:
-        break;
-    }
+  stop() {
+    this.setAnnouncement();
+    this.view.removePlayEvents(this.play);
+    this.view.displayAnnouncement(this.model.announcement);
+    this.view.showResetButton();
+    this.view.addResetEvent(this.reset);
   }
 
-  function printFinalWinner(scores) {
-    switch (true) {
-      case scores.user > scores.computer:
-        console.log("Congratulation! You're the final winner.");
-        break;
-      case scores.user < scores.computer:
-        console.log('Try again! You lose.');
-        break;
-      default:
-        console.log('Nobody wins!');
-        break;
-    }
+  reset = () => {
+    this.init();
+  };
+
+  setupModel() {
+    return {
+      choices: ['Rock', 'Paper', 'Scissors'],
+      scores: {
+        huScore: 0,
+        aiScore: 0,
+        maxScore: 5,
+      },
+      picks: {
+        huPick: '',
+        aiPick: '',
+      },
+      message: 'Welcome to Rock Paper Scissors',
+      announcement: 'Play',
+      rounds: 0,
+    };
   }
-  console.log(
-    `User Scores: ${scores.user}, Computer Scores: ${scores.computer}`
-  );
+
+  updateView() {
+    this.view.displayScores(this.model.scores);
+    this.view.displayMessage(this.model.message);
+    this.view.displayAnnouncement(this.model.announcement);
+    this.view.displayPicks(this.model.picks);
+    this.view.displayRounds(this.model.rounds);
+  }
+
+  init() {
+    this.model = this.setupModel();
+    this.updateView();
+    this.view.addPlayEvents(this.play);
+    this.view.hideResetButton();
+  }
 }
 
-window.onload = init;
+const app = new Controller(new View());

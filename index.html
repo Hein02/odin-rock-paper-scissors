@@ -4,19 +4,33 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="index.js"></script>
+    <script src="index.js" defer></script>
     <title>Odin's Rock Paper Scissors</title>
   </head>
   <body>
-    <div id="display" class="display">
-      <div id="score" class="score">
-        <div class="score__hu"></div>
-        <div class="score__ai"></div>
+    <h1>ROCK PAPER SCISSORS</h1>
+    <div class="display">
+      <div>Total rounds: <span class="js-rounds"></span></div>
+      <div class="score">
+        <div class="score__hu">
+          Your scores: <span class="js-hu-score"></span>
+        </div>
+        <div class="score__ai">
+          Computer's scores: <span class="js-ai-score"></span>
+        </div>
       </div>
-      <div id="noti" class="display__noti"></div>
+      <div class="picks">
+        <div>Your pick: <span class="js-hu-pick"></span></div>
+        <div>Computer's pick: <span class="js-ai-pick"></span></div>
+      </div>
+      <div class="display__message js-message"></div>
+      <div class="display__announcement js-announcement"></div>
     </div>
-    <button id="rock" class="button">Rock</button>
-    <button id="paper" class="button">Paper</button>
-    <button id="scissors" class="button">Scissors</button>
+    <div>
+      <button value="Rock" class="button js-button">Rock</button>
+      <button value="Paper" class="button js-button">Paper</button>
+      <button value="Scissors" class="button js-button">Scissors</button>
+    </div>
+    <button class="button js-reset" hidden>Reset</button>
   </body>
 </html>
