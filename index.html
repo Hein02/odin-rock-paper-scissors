@@ -4,33 +4,40 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <script src="index.js" defer></script>
     <title>Odin's Rock Paper Scissors</title>
   </head>
   <body>
-    <h1>ROCK PAPER SCISSORS</h1>
-    <div class="display">
-      <div>Total rounds: <span class="js-rounds"></span></div>
-      <div class="score">
-        <div class="score__hu">
-          Your scores: <span class="js-hu-score"></span>
+    <main class="rps">
+      <header class="rps__header">
+        <h1 class="rps__title">ROCK PAPER SCISSORS</h1>
+      </header>
+      <div class="display">
+        <div class="rounds">
+          Total rounds: <span class="rounds__value js-rounds"></span>
         </div>
-        <div class="score__ai">
-          Computer's scores: <span class="js-ai-score"></span>
+        <div class="score">
+          <div>Your scores: <span class="score__value js-hu-score"></span></div>
+          <div>
+            Computer's scores: <span class="score__value js-ai-score"></span>
+          </div>
         </div>
+        <div class="picks">
+          <div>Your pick: <span class="picks__value js-hu-pick"></span></div>
+          <div>
+            Computer's pick: <span class="picks__value js-ai-pick"></span>
+          </div>
+        </div>
+        <h3 class="message js-message"></h3>
+        <h2 class="announcement js-announcement"></h2>
       </div>
-      <div class="picks">
-        <div>Your pick: <span class="js-hu-pick"></span></div>
-        <div>Computer's pick: <span class="js-ai-pick"></span></div>
+      <div class="buttons-group">
+        <button value="Rock" class="button js-button">Rock</button>
+        <button value="Paper" class="button js-button">Paper</button>
+        <button value="Scissors" class="button js-button">Scissors</button>
       </div>
-      <div class="display__message js-message"></div>
-      <div class="display__announcement js-announcement"></div>
-    </div>
-    <div>
-      <button value="Rock" class="button js-button">Rock</button>
-      <button value="Paper" class="button js-button">Paper</button>
-      <button value="Scissors" class="button js-button">Scissors</button>
-    </div>
-    <button class="button js-reset" hidden>Reset</button>
+      <button class="button js-reset" hidden>Reset</button>
+    </main>
   </body>
 </html>

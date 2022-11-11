@@ -45,6 +45,10 @@ class View {
     );
   }
 
+  setDisabled(disabled) {
+    this.buttons.forEach((button) => (button.disabled = disabled));
+  }
+
   showResetButton() {
     this.reset.hidden = false;
   }
@@ -141,6 +145,7 @@ class Controller {
   stop() {
     this.setAnnouncement();
     this.view.removePlayEvents(this.play);
+    this.view.setDisabled(true);
     this.view.displayAnnouncement(this.model.announcement);
     this.view.showResetButton();
     this.view.addResetEvent(this.reset);
@@ -163,7 +168,7 @@ class Controller {
         aiPick: '',
       },
       message: 'Welcome to Rock Paper Scissors',
-      announcement: 'Play',
+      announcement: "Let's Play!",
       rounds: 0,
     };
   }
@@ -180,6 +185,7 @@ class Controller {
     this.model = this.setupModel();
     this.updateView();
     this.view.addPlayEvents(this.play);
+    this.view.setDisabled(false);
     this.view.hideResetButton();
   }
 }

@@ -1,0 +1,101 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+.rps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.rps__header {
+  background-color: black;
+  padding: 16px;
+  width: 100%;
+  text-align: center;
+}
+
+.rps__title {
+  color: antiquewhite;
+}
+
+.display {
+  width: 450px;
+  border: 1px solid black;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rounds__value {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.score {
+  display: flex;
+  justify-content: space-between;
+}
+
+.score__value {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.picks {
+  display: flex;
+  justify-content: space-between;
+}
+
+.picks__value {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.message {
+  background-color: black;
+  color: antiquewhite;
+  text-align: center;
+  padding: 16px;
+}
+
+.announcement {
+  background-color: black;
+  color: antiquewhite;
+  text-align: center;
+  padding: 16px;
+}
+
+.buttons-group {
+  display: flex;
+  gap: 32px;
+}
+
+.button {
+  background-color: black;
+  color: antiquewhite;
+  border: none;
+  width: 120px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: rgb(88, 86, 86);
+  cursor: not-allowed;
+}
